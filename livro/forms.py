@@ -10,7 +10,7 @@ class CadastroLivro(forms.ModelForm):
         model = Livros  # ta importando a model Livros, o formulário terá todos os campos
         fields = "__all__"
         
-    def __init__(*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['usuario'].widget = forms.HiddenInput()
         
