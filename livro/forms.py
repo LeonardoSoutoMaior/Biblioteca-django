@@ -1,7 +1,24 @@
+from usuarios.models import Usuario
 from django import forms
-from .models import Livros
+from django.db.models import fields
+from .models import Livros, Categoria
+from django.db import models    
+from datetime import date
 
 class CadastroLivro(forms.ModelForm):
     class Meta:
-        model = Livros
-        fields = ('nome', 'autor', 'co_autor', 'data_cadastro', 'emprestado', 'categoria')
+        model = Livros  # ta importando a model Livros, o formulário terá todos os campos
+        fields = "__all__"
+        
+    def __init__(*args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['usuario'].widget = forms.HiddenInput()
+        
+        
+class CategoriaLivro(forms.Form):
+    nome = forms.CharField(max_length=30)
+    descricao = forms.CharField(max_length=60)
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['descricao'].widget = forms.Textarea()
